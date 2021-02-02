@@ -20,7 +20,7 @@ using Newtonsoft.Json;
 
 namespace DSharpPlus.SlashCommands.Services
 {
-    public class SlashCommandHandlingService
+    public class  SlashCommandHandlingService
     {
         public bool Started { get; private set; }
 

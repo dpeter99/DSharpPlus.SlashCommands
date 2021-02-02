@@ -4,6 +4,13 @@ using System.Linq;
 
 namespace DSharpPlus.SlashCommands.Entities
 {
+    /// <summary>
+    /// The main unit that is being sent to Discord
+    /// Conatins at least one top level command
+    /// </summary>
+    /// <example>
+    /// /permissions
+    /// </example>
     public class SlashCommand
     {
         public string Name { get; set; }
@@ -12,6 +19,10 @@ namespace DSharpPlus.SlashCommands.Entities
         public ulong? CommandId { get; set; }
         public ulong? ApplicationId { get; set; }
         public int Version { get; set; }
+        
+        /// <summary>
+        /// The minimum base command
+        /// </summary>
         public SlashSubcommand? Command { get; init; }
 
         public Dictionary<string, SlashSubcommandGroup>? Subcommands { get; init; }

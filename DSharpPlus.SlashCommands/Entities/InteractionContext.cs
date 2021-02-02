@@ -23,6 +23,7 @@ namespace DSharpPlus.SlashCommands.Entities
             _client = c;
             Interaction = i;
         }
+        
         #region Followup
         /// <summary>
         /// Reply to the interaction by sending a followup message.
@@ -64,8 +65,11 @@ namespace DSharpPlus.SlashCommands.Entities
 
             return msg;
         }
+        
         #endregion
+        
         #region Edit
+        
         // Edit for both initial response and other responses.
         /// <summary>
         /// Edits an already sent message.
@@ -118,7 +122,9 @@ namespace DSharpPlus.SlashCommands.Entities
 
             return msg;
         }
+        
         #endregion
+        
         #region Delete
         /// <summary>
         /// Deletes the initial response for this interaction.

@@ -34,12 +34,16 @@ namespace DSharpPlus.SlashCommands
         }
 
         private readonly IServiceProvider _services;
+        
         private readonly SlashCommandHandlingService _slash;
         private readonly DiscordSlashConfiguration _config;
+        
         private readonly BaseDiscordClient? _discord;
         private readonly DiscordShardedClient? _sharded;
+        
         private readonly HttpClient _http;
         private readonly ILogger _logger;
+        
         private readonly JsonSerializerSettings _jsonSettings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
@@ -61,26 +65,36 @@ namespace DSharpPlus.SlashCommands
             }
 
             this._services = services.BuildServiceProvider();
+            
             this._logger = this._services.GetRequiredService<ILogger<DiscordSlashClient>>();
+            
             this._slash = this._services.GetRequiredService<SlashCommandHandlingService>();
+            
             this._config = config;
+            
             this._http = this._services.GetRequiredService<HttpClient>();
+            
             this._http.DefaultRequestHeaders.Authorization = new("Bot", this._config.Token);
+            
             this._discord = this._config.Client;
             this._sharded = this._config.ShardedClient;
 
             if (this._discord is null && this._sharded is null)
                 throw new Exception("A Discord Client or Sharded Client is required.");
         }
-
+        
+        /*
         /// <summary>
         /// Add an assembly to register commands from.
         /// </summary>
         /// <param name="assembly">Assembly to register</param>
+        
         public void RegisterCommands(Assembly assembly)
         {
             _slash.WithCommandAssembly(assembly);
         }
+        */
+        
 
         /// <summary>
         /// Starts the slash command client.
@@ -99,6 +113,7 @@ namespace DSharpPlus.SlashCommands
             await _slash.StartAsync(_config.Token, ApplicationId);
         }
 
+        
         /// <summary>
         /// Handle an incoming webhook request and return the default data to send back to Discord.
         /// </summary>
@@ -107,7 +122,8 @@ namespace DSharpPlus.SlashCommands
         public async Task<InteractionResponse?> HandleWebhookPost(string requestBody)
         {
             try
-            {// Attempt to get the Interact object from the JSON ...
+            {   
+                // Attempt to get the Interact object from the JSON ...
                 var i = JsonConvert.DeserializeObject<Interaction>(requestBody);
                 // ... and tell the handler to run the command ...
 
@@ -129,7 +145,7 @@ namespace DSharpPlus.SlashCommands
                 }
 
                 if (client is null)
-                    throw new Exception("Failed to get a proper cleint for this request.");
+                    throw new Exception("Failed to get a proper client for this request.");
 
                 await _slash.HandleInteraction(client, i, this);
             }
